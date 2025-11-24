@@ -72,8 +72,8 @@ def start_game(code: str, db: Session = Depends(get_db)):
     
     # Count players
     player_count = db.query(models.Player).filter(models.Player.game_id == game.id).count()
-    if player_count < 3:
-        raise HTTPException(status_code=400, detail="Need at least 3 players to start")
+    if player_count < 2:
+        raise HTTPException(status_code=400, detail="Need at least 2 players to start")
 
     game.status = "setup_questions"
     game.round_number = 0

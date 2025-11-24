@@ -25,7 +25,7 @@ const HostLobbyPage = () => {
   };
 
   const playerCount = state?.players.length || 0;
-  const canStart = playerCount >= 3;
+  const canStart = playerCount >= 2;
 
   return (
     <div style={{ 
@@ -77,7 +77,7 @@ const HostLobbyPage = () => {
           marginTop: 20
         }}
       >
-        {starting ? "Starting..." : canStart ? "Start Game" : "Need 3+ Players"}
+        {starting ? "Starting..." : canStart ? "Start Game" : "Need 2+ Players"}
       </button>
     </div>
   );
