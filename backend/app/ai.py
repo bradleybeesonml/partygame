@@ -7,7 +7,7 @@ def generate_impostor_answer(question: str, player_answers: list[str]) -> str:
     """
     Generates an AI answer that tries to blend in with player answers.
     """
-    
+    # Inject answers into prompt
     # Format answers as a clean bulleted list
     formatted_answers = "\n".join([f"- {a}" for a in player_answers])
     
