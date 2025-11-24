@@ -79,45 +79,28 @@ const PlayerGamePage = () => {
   const isFinished = state.status === "finished";
 
   return (
-    <div style={{
-        width: "100vw",
-        minHeight: "100vh",
-        backgroundColor: "gainsboro", // Darker background for desktop sides
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start", // Allows scrolling of the whole page if window is small
-        paddingTop: "5vh",
-        paddingBottom: "5vh",
-        boxSizing: "border-box"
+    <div style={{ 
+        padding: 24, 
+        minHeight: "100vh", 
+        display: "flex", 
+        flexDirection: "column", 
+        alignItems: "center", 
+        justifyContent: "flex-start",
+        maxWidth: 500,
+        margin: "0 auto",
+        textAlign: "center"
     }}>
-      <div style={{ 
-          padding: 20,
-          paddingTop: "40px",
-          paddingBottom: "40px",
-          minHeight: "80vh", // Shortened from 100vh
-          width: "100%",
-          maxWidth: 600,
-          backgroundColor: "#242424", // Standard app background
-          display: "flex", 
-          flexDirection: "column", 
-          alignItems: "center", 
-          justifyContent: "flex-start", 
-          boxShadow: "0 0 50px rgba(0,0,0,0.5)", // Shadow for desktop depth
-          overflowY: "auto",
-          borderRadius: "20px", // Rounded corners
-          boxSizing: "border-box"
-      }}>
-        <div style={{ width: "100%", textAlign: "center", marginBottom: 20 }}>
-          <h1 style={{ fontSize: "1.8em", margin: "0 0 10px 0", color: "dodgerblue"}}>AI Impostor Game</h1>
-          <div style={{ display: "flex", justifyContent: "space-between", padding: "10px", backgroundColor: "#333", borderRadius: 8, fontSize: "0.9em" }}>
-              <span>Code: <strong>{code}</strong></span>
-              <span>Name: <strong>{player.name}</strong></span>
-              <span>Score: <strong>{player.score}</strong></span>
-          </div>
+      <div style={{ width: "100%", textAlign: "center", marginBottom: 20 }}>
+        <h1 style={{ fontSize: "1.8em", margin: "0 0 10px 0", color: "dodgerblue"}}>AI Impostor Game</h1>
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "10px", backgroundColor: "#333", borderRadius: 8, fontSize: "0.9em" }}>
+            <span>Code: <strong>{code}</strong></span>
+            <span>Name: <strong>{player.name}</strong></span>
+            <span>Score: <strong>{player.score}</strong></span>
         </div>
-      
-        <div style={{ width: "100%", flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
-          {state.status === "setup_questions" && (
+      </div>
+    
+      <div style={{ width: "100%", flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
+        {state.status === "setup_questions" && (
               <div style={{ textAlign: "center", padding: 20 }}>
                   <h2>Waiting for host...</h2>
                   <p>The host is setting up the game parameters.</p>
@@ -242,7 +225,6 @@ const PlayerGamePage = () => {
               </div>
           )}
         </div>
-      </div>
     </div>
   );
 };
