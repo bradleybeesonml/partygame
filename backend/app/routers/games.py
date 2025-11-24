@@ -153,7 +153,7 @@ def submit_answer(code: str, req: schemas.SubmitAnswerRequest, db: Session = Dep
     if not current_round:
         raise HTTPException(status_code=500, detail="Current round not found")
 
-    # Check if already answered
+        # Check if already answered
     existing = db.query(models.Answer).filter(
         models.Answer.round_id == current_round.id,
         models.Answer.player_id == req.player_id
@@ -165,7 +165,7 @@ def submit_answer(code: str, req: schemas.SubmitAnswerRequest, db: Session = Dep
     answer = models.Answer(
         round_id=current_round.id,
         player_id=req.player_id,
-        text=req.text
+        text=req.text.lower()
     )
     db.add(answer)
     db.commit()
@@ -191,7 +191,7 @@ def submit_answer(code: str, req: schemas.SubmitAnswerRequest, db: Session = Dep
         ai_answer = models.Answer(
             round_id=current_round.id,
             player_id=None, # AI
-            text=ai_text
+            text=ai_text.lower()
         )
         db.add(ai_answer)
         
@@ -331,6 +331,15 @@ def get_game_state(code: str, db: Session = Depends(get_db)):
             .filter(models.Answer.round_id == current_round.id)
             .all()
         )
+        
+        # Stable sort based on hash of answer ID + current round ID to ensure consistent random order for all clients
+        # Or just sort by ID if we want stable but non-random (but we want random)
+        # The issue with random.shuffle here is it runs every request.
+        
+        # Better approach: Seed the shuffle with the round ID
+        # This ensures all clients see the same "random" order for this round
+        r = random.Random(str(current_round.id))
+        r.shuffle(answers)
 
     return schemas.GameState(
         game_id=game.id,

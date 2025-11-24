@@ -193,6 +193,9 @@ const PlayerGamePage = () => {
 
           {isVotingPhase && (
               <div style={{ width: "100%" }}>
+                  <div style={{ textAlign: "center", marginBottom: 10 }}>
+                      <p style={{ fontSize: "1.1em", fontStyle: "italic", color: "#ccc" }}>"{state.question_text}"</p>
+                  </div>
                   {!voteSubmitted ? (
                       <VotingView 
                           answers={state.answers} 

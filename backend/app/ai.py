@@ -21,14 +21,15 @@ def generate_impostor_answer(question: str, player_answers: list[str]) -> str:
     
     Your goal is to write ONE new answer to the question that blends in perfectly.
     
-    CRITICAL: To blend in, you MUST pick ONE specific answer from the list above and mimic its exact style, length, capitalization, and punctuation patterns, but with different content.
+    CRITICAL: To blend in, you MUST pick ONE specific answer from the list above and mimic its exact style, length, and punctuation patterns, but with different content.
     
     Instructions:
     - Do NOT directly copy the content of any answer. Write something new.
-    - Mimic the "voice" of one of the humans exactly (e.g. if they use all lowercase, you use all lowercase).
+    - Mimic the "voice" of one of the humans exactly (e.g. if they use short words, you use short words).
     - Be humorous, casual, and human-like.
     - Do not use hashtags or emojis unless the human answers did.
     - Output ONLY the raw answer text. No quotes, no explanations.
+    - Your answer MUST be in all lowercase letters.
     """
     
     print(f"DEBUG: AI Prompt:\n{prompt}")

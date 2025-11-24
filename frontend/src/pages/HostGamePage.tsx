@@ -136,11 +136,17 @@ const HostGamePage = () => {
         )}
 
         {state.status === "voting" && (
-            <VotingView 
-              answers={state.answers} 
-              canVote={false} 
-              title="Which answer is the AI?" 
-            />
+            <div>
+                <div style={{ textAlign: "center", marginBottom: 20 }}>
+                    <h2 style={{ opacity: 0.7 }}>Question</h2>
+                    <div style={{ fontSize: "1.8em", padding: 20 }}>{state.question_text}</div>
+                </div>
+                <VotingView 
+                  answers={state.answers} 
+                  canVote={false} 
+                  title="Which answer is the AI?" 
+                />
+            </div>
         )}
 
         {state.status === "reveal" && (
