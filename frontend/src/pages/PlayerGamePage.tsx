@@ -91,7 +91,7 @@ const PlayerGamePage = () => {
         textAlign: "center"
     }}>
       <div style={{ width: "100%", textAlign: "center", marginBottom: 20 }}>
-        <h1 style={{ fontSize: "1.8em", margin: "0 0 10px 0", color: "dodgerblue"}}>AI Impostor Game</h1>
+        <h1 style={{ fontSize: "1.8em", margin: "0 0 10px 0", color: "dodgerblue"}}>Secret Clanker</h1>
         <div style={{ display: "flex", justifyContent: "space-between", padding: "10px", backgroundColor: "#333", borderRadius: 8, fontSize: "0.9em" }}>
             <span>Code: <strong>{code}</strong></span>
             <span>Name: <strong>{player.name}</strong></span>

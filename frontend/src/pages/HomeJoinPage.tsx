@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createGame, joinGame } from "../api/client";
+import robotMascot from "../assets/Robot-Emoji.png";
 
 const HomeJoinPage = () => {
   const [name, setName] = useState("");
@@ -38,18 +39,30 @@ const HomeJoinPage = () => {
   };
 
   return (
-    <div style={{ 
+    <div className="animated-bg" style={{ 
         padding: 24, 
         minHeight: "100vh", 
         display: "flex", 
         flexDirection: "column", 
         alignItems: "center", 
         justifyContent: "center",
-        maxWidth: 500,
-        margin: "0 auto",
+        width: "100%",
         textAlign: "center"
     }}>
-      <h1 style={{ fontSize: "2.5em", marginBottom: 40 }}>AI Impostor Party Game</h1>
+      <div style={{ width: "100%", maxWidth: 500 }}>
+        <div style={{ marginBottom: 10 }}>
+        <img 
+          src={robotMascot} 
+          alt="Secret Clanker Mascot" 
+          style={{ 
+            width: 120, 
+            height: 120, 
+            objectFit: "contain",
+            animation: "float 3s ease-in-out infinite"
+          }} 
+        />
+      </div>
+      <h1 style={{ fontSize: "2.5em", marginBottom: 40, marginTop: 0, fontStyle: 'italic' }}>Secret Clanker</h1>
 
       <section style={{ width: "100%", marginBottom: 40 }}>
         <h2>Join Game</h2>
@@ -88,6 +101,7 @@ const HomeJoinPage = () => {
           Create New Game
         </button>
       </section>
+      </div>
     </div>
   );
 };

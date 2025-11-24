@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useGamePolling } from "../hooks/useGamePolling";
 import { startGame } from "../api/client";
 import { useState } from "react";
+import robotMascot from "../assets/Robot-Emoji.png";
 
 const HostLobbyPage = () => {
   const { code } = useParams<{ code: string }>();
@@ -28,16 +29,28 @@ const HostLobbyPage = () => {
   const canStart = playerCount >= 2;
 
   return (
-    <div style={{ 
+    <div className="animated-bg" style={{ 
         padding: 24, 
         minHeight: "100vh", 
         display: "flex", 
         flexDirection: "column", 
         alignItems: "center", 
         justifyContent: "center",
-        textAlign: "center"
+        textAlign: "center",
+        width: "100%"
     }}>
-      <h1 style={{ fontSize: "4em", marginBottom: 20 }}>Lobby Code: <span style={{ color: "dodgerblue", letterSpacing: 8 }}>{code}</span></h1>
+      <img 
+          src={robotMascot} 
+          alt="Mascot" 
+          style={{ 
+            width: 100, 
+            height: 100, 
+            objectFit: "contain",
+            marginBottom: 10,
+            animation: "float 3s ease-in-out infinite"
+          }} 
+      />
+      <h1 style={{ fontSize: "4em", marginBottom: 20, marginTop: 0 }}>Lobby Code: <span style={{ color: "dodgerblue", letterSpacing: 8 }}>{code}</span></h1>
       <p style={{ fontSize: "1.5em", marginBottom: 40 }}>Join at <strong>{window.location.hostname}</strong></p>
 
       <div style={{ marginBottom: 40, width: "100%", maxWidth: 800 }}>

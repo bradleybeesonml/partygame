@@ -87,7 +87,7 @@ const HostGamePage = () => {
   const winner = sortedPlayers.length > 0 ? sortedPlayers[0] : null;
 
   return (
-    <div style={{ 
+    <div className="animated-bg" style={{ 
         padding: 24, 
         paddingTop: "50px",
         minHeight: "100vh", 
@@ -95,11 +95,13 @@ const HostGamePage = () => {
         flexDirection: "column", 
         alignItems: "center", 
         justifyContent: "flex-start", 
-        textAlign: "center"
+        textAlign: "center",
+        width: "100%",
+        position: "relative"
     }}>
-      <h1 style={{ marginBottom: 40 }}>Host Game View - Code: {code}</h1>
+      <h1 style={{ marginBottom: 20 }}>Host Game View - Code: {code}</h1>
       
-      <div style={{ width: "100%", maxWidth: 1000, flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: 40 }}>
+      <div style={{ width: "100%", maxWidth: 1000, flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
         {state.status === "setup_questions" && (
             <div>
                 <h2>How many questions per player?</h2>
@@ -136,16 +138,30 @@ const HostGamePage = () => {
         )}
 
         {state.status === "voting" && (
-            <div>
-                <div style={{ textAlign: "center", marginBottom: 20 }}>
-                    <h2 style={{ opacity: 0.7 }}>Question</h2>
-                    <div style={{ fontSize: "1.8em", padding: 20 }}>{state.question_text}</div>
+            <div style={{ marginTop: 20 }}>
+                <div style={{ 
+                    backgroundColor: "rgba(0, 0, 0, 0.3)", 
+                    border: "2px solid rgba(255, 255, 255, 0.2)", 
+                    borderRadius: 12, 
+                    padding: 20,
+                    marginBottom: 30
+                }}>
+                    <h2 style={{ opacity: 0.7, marginTop: 0, marginBottom: 10 }}>Question</h2>
+                    <div style={{ fontSize: "2.0em", fontStyle: 'italic' }}>{state.question_text}</div>
                 </div>
-                <VotingView 
-                  answers={state.answers} 
-                  canVote={false} 
-                  title="Which answer is the AI?" 
-                />
+                
+                <div style={{ 
+                    backgroundColor: "rgba(0, 0, 0, 0.3)", 
+                    border: "2px solid rgba(255, 255, 255, 0.2)", 
+                    borderRadius: 12, 
+                    padding: 20
+                }}>
+                    <VotingView 
+                      answers={state.answers} 
+                      canVote={false} 
+                      title="Which answer is the AI?" 
+                    />
+                </div>
             </div>
         )}
 
@@ -169,8 +185,10 @@ const HostGamePage = () => {
         )}
 
         {state.status === "finished" && (
-            <div style={{ textAlign: "center" }}>
-                <Confetti width={width} height={height} recycle={true} />
+            <div style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
+                <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1000, pointerEvents: "none" }}>
+                    <Confetti width={width} height={height} recycle={true} />
+                </div>
                 
                 <h2 style={{ fontSize: "3em", marginBottom: "20px" }}>Game Over!</h2>
                 

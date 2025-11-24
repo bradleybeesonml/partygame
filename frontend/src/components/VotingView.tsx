@@ -7,10 +7,10 @@ type Props = {
   title?: string;
 };
 
-export const VotingView = ({ answers, onVote, canVote = true, title = "Vote for the Impostor!" }: Props) => {
+export const VotingView = ({ answers, onVote, canVote = true, title = "Vote for the Secret Clanker 🤖" }: Props) => {
   return (
-    <div style={{ textAlign: "center", marginTop: 20 }}>
-      <h2>{title}</h2>
+    <div style={{ textAlign: "center" }}>
+      <h2 style={{ marginTop: 0 }}>{title}</h2>
       <div style={{ 
         display: "flex", 
         flexWrap: "wrap", 

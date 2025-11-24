@@ -36,7 +36,7 @@ export const RevealView = ({ answers, players, votes }: Props) => {
 
           const author = answer.player_id 
             ? players.find(p => p.id === answer.player_id)?.name 
-            : "🤖 AI Impostor";
+            : "🤖 Secret Clanker";
 
           return (
             <div 
@@ -58,7 +58,7 @@ export const RevealView = ({ answers, players, votes }: Props) => {
               </div>
               
               <div style={{ fontSize: "0.9em", opacity: 0.7, marginBottom: 4 }}>
-                {isAI ? "🤖 IMPOSTOR" : `By ${author}`}
+                {isAI ? "🤖 SECRET CLANKER" : `By ${author}`}
               </div>
 
               {voters.length > 0 && (
