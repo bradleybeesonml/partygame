@@ -9,7 +9,7 @@ def generate_impostor_answer(question: str, player_answers: list[str]) -> str:
     """
     # Inject answers into prompt
     # Format answers as a clean bulleted list
-    formatted_answers = "\n".join([f"- {a}" for a in player_answers])
+    formatted_answers = "\n".join([f"{a}" for a in player_answers])
     
     prompt = f"""
     You are playing a party game where you need to blend in with other players.
@@ -30,6 +30,7 @@ def generate_impostor_answer(question: str, player_answers: list[str]) -> str:
     - Do not use hashtags or emojis unless the human answers did.
     - Output ONLY the raw answer text. No quotes, no explanations.
     - Your answer MUST be in all lowercase letters.
+    - Do not wrap your answer in quotes.
     """
     
     print(f"DEBUG: AI Prompt:\n{prompt}")
