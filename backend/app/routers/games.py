@@ -221,6 +221,15 @@ def submit_vote(code: str, req: schemas.SubmitVoteRequest, db: Session = Depends
         .first()
     )
     
+    # Check if player is trying to vote for their own answer
+    player_answer = db.query(models.Answer).filter(
+        models.Answer.round_id == current_round.id,
+        models.Answer.player_id == req.player_id
+    ).first()
+    
+    if player_answer and player_answer.id == req.answer_id:
+        raise HTTPException(status_code=400, detail="You cannot vote for your own answer")
+    
     # Check if already voted
     existing = db.query(models.Vote).filter(
         models.Vote.round_id == current_round.id,
@@ -286,19 +295,32 @@ def next_round(code: str, db: Session = Depends(get_db)):
     game = db.query(models.Game).filter(models.Game.code == code).first()
     if not game:
         raise HTTPException(status_code=404, detail="Game not found")
-        
-    # Check if next round exists
-    next_round_index = game.round_number + 1
-    next_round_obj = db.query(models.Round).filter(
-        models.Round.game_id == game.id,
-        models.Round.round_index == next_round_index
-    ).first()
     
-    if next_round_obj:
-        game.round_number = next_round_index
+    # If we're in reveal, transition to leaderboard
+    if game.status == "reveal":
+        # Check if there's a next round
+        next_round_index = game.round_number + 1
+        next_round_obj = db.query(models.Round).filter(
+            models.Round.game_id == game.id,
+            models.Round.round_index == next_round_index
+        ).first()
+        
+        if next_round_obj:
+            # There's another round, go to leaderboard first
+            game.status = "leaderboard"
+        else:
+            # No more rounds, go straight to finished
+            game.status = "finished"
+        
+        db.commit()
+        return {"status": game.status}
+    
+    # If we're in leaderboard, go to the next round
+    if game.status == "leaderboard":
+        game.round_number += 1
         game.status = "answering"
-    else:
-        game.status = "finished"
+        db.commit()
+        return {"status": game.status}
         
     db.commit()
     return {"status": game.status}

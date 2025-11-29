@@ -21,8 +21,8 @@ def generate_impostor_answer(question: str, player_answers: list[str]) -> str:
     
     Your goal is to write ONE new answer to the question that blends in perfectly.
     
-    CRITICAL: To blend in, you MUST pick ONE specific answer from the list above and mimic its exact style, length, and punctuation patterns, but with different content.
-    
+    CRITICAL: To blend in, you may pick one of the answers from the list above mimic its style, length, and punctuation patterns, but with different content.
+    Try not to copy an answer exactly, but blend in with the group.
     Instructions:
     - Do NOT directly copy the content of any answer. Write something new.
     - Mimic the "voice" of one of the humans exactly (e.g. if they use short words, you use short words).

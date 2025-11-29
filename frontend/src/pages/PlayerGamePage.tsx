@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { submitQuestion, submitAnswer, submitVote } from "../api/client";
 import { VotingView } from "../components/VotingView";
 import { RevealView } from "../components/RevealView";
+import { ScoreAnimation } from "../components/ScoreAnimation";
 
 const PlayerGamePage = () => {
   const { code } = useParams<{ code: string }>();
@@ -76,7 +77,16 @@ const PlayerGamePage = () => {
   const isAnsweringPhase = state.status === "answering";
   const isVotingPhase = state.status === "voting";
   const isRevealPhase = state.status === "reveal";
+  const isLeaderboardPhase = state.status === "leaderboard";
   const isFinished = state.status === "finished";
+
+  // Find the player's own answer in the current round (to prevent self-voting)
+  const playerAnswer = state.answers?.find((a: any) => a.player_id === playerId);
+  const playerAnswerId = playerAnswer?.id;
+
+  // Sort players for leaderboard
+  const sortedPlayers = [...state.players].sort((a: any, b: any) => b.score - a.score);
+  const playerRank = sortedPlayers.findIndex((p: any) => p.id === playerId) + 1;
 
   return (
     <div style={{ 
@@ -88,10 +98,14 @@ const PlayerGamePage = () => {
         justifyContent: "flex-start",
         maxWidth: 500,
         margin: "0 auto",
-        textAlign: "center"
+        textAlign: "center",
+        position: "relative"
     }}>
+      {/* Score Animation Overlay */}
+      <ScoreAnimation currentScore={player.score} />
+      
       <div style={{ width: "100%", textAlign: "center", marginBottom: 20 }}>
-        <h1 style={{ fontSize: "1.8em", margin: "0 0 10px 0", color: "dodgerblue"}}>Secret Clanker</h1>
+        <h1 style={{ fontSize: "1.8em", margin: "0 0 10px 0", color: "white"}}>Secret Clanker 🤖</h1>
         <div style={{ display: "flex", justifyContent: "space-between", padding: "10px", backgroundColor: "#333", borderRadius: 8, fontSize: "0.9em" }}>
             <span>Code: <strong>{code}</strong></span>
             <span>Name: <strong>{player.name}</strong></span>
@@ -201,6 +215,7 @@ const PlayerGamePage = () => {
                           answers={state.answers} 
                           onVote={handleVote}
                           canVote={!submitting}
+                          playerAnswerId={playerAnswerId}
                       />
                   ) : (
                       <div style={{ textAlign: "center", padding: 20 }}>
@@ -218,6 +233,55 @@ const PlayerGamePage = () => {
                       players={state.players} 
                       votes={state.votes || []} 
                   />
+              </div>
+          )}
+
+          {isLeaderboardPhase && (
+              <div style={{ width: "100%", textAlign: "center" }}>
+                  <h2 style={{ fontSize: "2em", marginBottom: 20 }}>Leaderboard</h2>
+                  
+                  <div style={{
+                      backgroundColor: "rgba(100, 149, 237, 0.2)",
+                      border: "3px solid dodgerblue",
+                      borderRadius: 12,
+                      padding: "20px",
+                      marginBottom: 30
+                  }}>
+                      <div style={{ fontSize: "3em", fontWeight: "bold", color: "dodgerblue" }}>
+                          #{playerRank}
+                      </div>
+                      <div style={{ fontSize: "1.2em", marginTop: 10 }}>
+                          Your Rank
+                      </div>
+                      <div style={{ fontSize: "2em", fontWeight: "bold", marginTop: 10 }}>
+                          {player.score} points
+                      </div>
+                  </div>
+
+                  <div style={{ fontSize: "1em", opacity: 0.8 }}>
+                      <h3 style={{ marginBottom: 15 }}>All Players:</h3>
+                      {sortedPlayers.map((p: any, index: number) => (
+                          <div 
+                              key={p.id}
+                              style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  padding: "10px 15px",
+                                  backgroundColor: p.id === playerId ? "rgba(100, 149, 237, 0.3)" : "rgba(0, 0, 0, 0.2)",
+                                  borderRadius: 8,
+                                  marginBottom: 8,
+                                  fontWeight: p.id === playerId ? "bold" : "normal"
+                              }}
+                          >
+                              <span>#{index + 1} {p.name}</span>
+                              <span>{p.score}</span>
+                          </div>
+                      ))}
+                  </div>
+
+                  <p style={{ marginTop: 30, fontSize: "1.1em", opacity: 0.7 }}>
+                      Waiting for host to continue...
+                  </p>
               </div>
           )}
 

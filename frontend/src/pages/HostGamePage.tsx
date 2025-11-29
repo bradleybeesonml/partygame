@@ -99,7 +99,7 @@ const HostGamePage = () => {
         width: "100%",
         position: "relative"
     }}>
-      <h1 style={{ marginBottom: 20 }}>Host Game View - Code: {code}</h1>
+      <h1 style={{ marginBottom: 20 }}>Host View - Game Code: {code}</h1>
       
       <div style={{ width: "100%", maxWidth: 1000, flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
         {state.status === "setup_questions" && (
@@ -178,9 +178,82 @@ const HostGamePage = () => {
                       disabled={submitting}
                       style={{ padding: "15px 30px", fontSize: "1.5em" }}
                     >
-                        Next Round
+                        Show Leaderboard
                     </button>
                 </div>
+            </div>
+        )}
+
+        {state.status === "leaderboard" && (
+            <div style={{ textAlign: "center" }}>
+                <h2 style={{ fontSize: "2.5em", marginBottom: 30 }}>Leaderboard</h2>
+                
+                <div style={{ 
+                    display: "flex", 
+                    flexDirection: "column", 
+                    alignItems: "center", 
+                    gap: "15px",
+                    marginBottom: "50px",
+                    padding: "20px"
+                }}>
+                    {sortedPlayers.map((p, index) => {
+                        let medal = null;
+                        let color = "white";
+                        let size = "2em";
+                        let fontWeight = "normal";
+
+                        if (index === 0) {
+                            medal = "🥇";
+                            color = "#FFD700"; // Gold
+                            size = "2.8em";
+                            fontWeight = "bold";
+                        } else if (index === 1) {
+                            medal = "🥈";
+                            color = "#C0C0C0"; // Silver
+                            size = "2.3em";
+                            fontWeight = "bold";
+                        } else if (index === 2) {
+                            medal = "🥉";
+                            color = "#CD7F32"; // Bronze
+                            size = "2em";
+                            fontWeight = "bold";
+                        }
+
+                        return (
+                            <div 
+                                key={p.id} 
+                                style={{ 
+                                    fontSize: size, 
+                                    color: color, 
+                                    fontWeight: fontWeight as any,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "15px",
+                                    backgroundColor: "rgba(0, 0, 0, 0.3)",
+                                    padding: "15px 30px",
+                                    borderRadius: 12,
+                                    minWidth: "400px",
+                                    justifyContent: "space-between"
+                                }}
+                            >
+                                <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+                                    <span style={{ fontSize: "0.8em", opacity: 0.7 }}>#{index + 1}</span>
+                                    {medal && <span>{medal}</span>}
+                                    <span>{p.name}</span>
+                                </div>
+                                <span style={{ fontWeight: "bold" }}>{p.score}</span>
+                            </div>
+                        );
+                    })}
+                </div>
+                
+                <button 
+                    onClick={handleNextRound}
+                    disabled={submitting}
+                    style={{ padding: "20px 40px", fontSize: "1.8em" }}
+                >
+                    Continue to Next Round
+                </button>
             </div>
         )}
 
